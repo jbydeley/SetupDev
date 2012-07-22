@@ -1,0 +1,6 @@
+Just a simple developer setup util to get an environment up to speed quickly. 
+
+To Use:
+This app uses a config file to read out the developers preferences. If you don't have one, it will be created with some default values which you can then edit. Once you've customized the configuration, just run SetupDev -f to download all files and (when finished) setup all exports / environment variables.
+
+You can then share the config file for every new developer and never have to worry about settings up every aspect of your environment.
