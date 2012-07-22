@@ -1,0 +1,16 @@
+
+<Config>
+  <Downloads>
+    <Download>
+      <Filename>go1.0.2.windows-amd64.msi</Filename>
+      <Url>http://go.googlecode.com/files/go1.0.2.windows-amd64.msi</Url>
+      <SaveLocation>./</SaveLocation>
+    </Download>
+  </Downloads>
+  <Exports>
+    <Export>
+      <Key>GOPATH</Key>
+      <Value>./</Value>
+    </Export>
+  </Exports>
+</Config>
