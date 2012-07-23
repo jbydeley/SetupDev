@@ -40,7 +40,12 @@ func (c *Config) SaveHelpConfig() error {
 		Download{
 			Filename:     "go1.0.2.windows-amd64.msi",
 			Url:          "http://go.googlecode.com/files/go1.0.2.windows-amd64.msi",
-			SaveLocation: "./"}}
+			SaveLocation: "./"},
+		Download{
+			Filename:			"apache-ant-1.8.4-bin.zip",
+			Url:					"http://mirror.csclub.uwaterloo.ca/apache//ant/binaries/apache-ant-1.8.4-bin.zip",
+			SaveLocation:	"./",
+			ZipLocation:	"C:/test/ant/"}}
 
 	c.Exports = []Export{
 		Export{
