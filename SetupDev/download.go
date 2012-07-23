@@ -1,10 +1,10 @@
 package main
 
 import (
-	"io"
-	"io/ioutil"
-	"net/http"
 	"archive/zip"
+	"io/ioutil"
+	"os"
+	"path/filepath"
 )
 
 type Download struct {
@@ -14,44 +14,16 @@ type Download struct {
 	ZipLocation  string
 }
 
-func (d *Download) Download() error {
-	results, err := http.Get(d.Url)
-	if err != nil {
-		return err
-	}
-	defer results.Body.Close()
-	body, err := ioutil.ReadAll(results.Body)
-	if err != nil {
-		return err
-	}
-	ioutil.WriteFile(d.SaveLocation+d.Filename, body, 0600)
-	if d.ZipLocation != "" {
-		unZip(d)
-	}
-	wg.Done()
-	return nil
-}
-
-func unZip(d *Download) error {
-	r, err := zip.OpenReader(d.SaveLocation + d.Filename)
-	if err != nil {
-		print(err.Error(), "\n")
-	}
+func unZip(d Download) error {
+	r, _ := zip.OpenReader(d.SaveLocation + d.Filename)
 	defer r.Close()
 
 	for _, f := range r.File {
-		rc, err := f.Open()
-		if err != nil {
-			print(err.Error(), "\n")
-		}
+		f.Open()
 		var buf []byte
+		os.MkdirAll(filepath.Dir(d.ZipLocation+f.Name), 0600)
 
-		_, err = io.ReadFull(rc, buf)
-		err = ioutil.WriteFile(d.ZipLocation+f.Name, buf, 0600)
-		if err != nil {
-			print(err.Error(), "\n")
-		}
-		rc.Close()
+		ioutil.WriteFile(d.ZipLocation+f.Name, buf, 0600)
 	}
 	return nil
 }

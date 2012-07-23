@@ -8,8 +8,8 @@ import (
 )
 
 type Config struct {
-	Downloads []Download     `xml:"Downloads>Download"`
-	Exports   []Export `xml:"Exports>Export"`
+	Downloads []Download `xml:"Downloads>Download"`
+	Exports   []Export   `xml:"Exports>Export"`
 }
 
 func (c *Config) Load(fileName string) error {
@@ -42,10 +42,10 @@ func (c *Config) SaveHelpConfig() error {
 			Url:          "http://go.googlecode.com/files/go1.0.2.windows-amd64.msi",
 			SaveLocation: "./"},
 		Download{
-			Filename:			"apache-ant-1.8.4-bin.zip",
-			Url:					"http://mirror.csclub.uwaterloo.ca/apache//ant/binaries/apache-ant-1.8.4-bin.zip",
-			SaveLocation:	"./",
-			ZipLocation:	"C:/test/ant/"}}
+			Filename:     "apache-ant-1.8.4-bin.zip",
+			Url:          "http://mirror.csclub.uwaterloo.ca/apache//ant/binaries/apache-ant-1.8.4-bin.zip",
+			SaveLocation: "./",
+			ZipLocation:  "C:/test/ant/"}}
 
 	c.Exports = []Export{
 		Export{
