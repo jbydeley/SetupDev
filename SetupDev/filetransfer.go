@@ -7,14 +7,14 @@ import (
 	"path/filepath"
 )
 
-type Download struct {
+type FileTransfer struct {
 	Filename     string
 	Url          string
 	SaveLocation string
 	ZipLocation  string
 }
 
-func unZip(d Download) error {
+func unZip(d FileTransfer) error {
 	r, _ := zip.OpenReader(d.SaveLocation + d.Filename)
 	defer r.Close()
 

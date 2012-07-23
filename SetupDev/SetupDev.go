@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"net/http"
 	"io/ioutil"
+	"net/http"
 )
 
 const configFile = "config.xml"
@@ -58,21 +58,23 @@ func main() {
 			}
 		}
 	}
+
 	if *full || *network {
-		body, _ := ioutil.ReadFile("\\\\WTLWF046\\c$\\certreq.txt")
-		ioutil.WriteFile("d:/Testthis.txt", body, 0600)
-		print(string(body), "\n")
+		for _, v := range c.LocalFiles {
+			body, _ := ioutil.ReadFile(v.Url)
+			ioutil.WriteFile(v.SaveLocation+v.Filename, body, 0600)
+		}
 	}
 
 	if *full || *downloads {
-	for v := 0; v < len(c.Downloads); v++ {
-		success := <-ch
-		fmt.Printf("Download: %v\n", success)
+		for v := 0; v < len(c.Downloads); v++ {
+			success := <-ch
+			fmt.Printf("Download: %v\n", success)
+		}
 	}
 }
-}
 
-func Get(d Download, ch chan bool) {
+func Get(d FileTransfer, ch chan bool) {
 	results, err := http.Get(d.Url)
 	if err != nil {
 		ch <- false
@@ -90,4 +92,3 @@ func Get(d Download, ch chan bool) {
 	}
 	ch <- true
 }
-

@@ -8,8 +8,9 @@ import (
 )
 
 type Config struct {
-	Downloads []Download `xml:"Downloads>Download"`
-	Exports   []Export   `xml:"Exports>Export"`
+	Downloads  []FileTransfer `xml:"Downloads>Download"`
+	Exports    []Export       `xml:"Exports>Export"`
+	LocalFiles []FileTransfer `xml:"LocalFiles>LocalFile"`
 }
 
 func (c *Config) Load(fileName string) error {
@@ -36,12 +37,12 @@ func (c *Config) Save() error {
 
 func (c *Config) SaveHelpConfig() error {
 
-	c.Downloads = []Download{
-		Download{
+	c.Downloads = []FileTransfer{
+		FileTransfer{
 			Filename:     "go1.0.2.windows-amd64.msi",
 			Url:          "http://go.googlecode.com/files/go1.0.2.windows-amd64.msi",
 			SaveLocation: "./"},
-		Download{
+		FileTransfer{
 			Filename:     "apache-ant-1.8.4-bin.zip",
 			Url:          "http://mirror.csclub.uwaterloo.ca/apache//ant/binaries/apache-ant-1.8.4-bin.zip",
 			SaveLocation: "./",
@@ -51,6 +52,12 @@ func (c *Config) SaveHelpConfig() error {
 		Export{
 			Key:   "GOPATH",
 			Value: "./"}}
+
+	c.LocalFiles = []FileTransfer{
+		FileTransfer{
+			Filename:     "certreq.txt",
+			Url:          "\\\\WTLWF046\\c$\\certreq.txt",
+			SaveLocation: "./"}}
 
 	return c.Save()
 }
