@@ -55,8 +55,8 @@ func (c *Config) SaveHelpConfig() error {
 
 	c.LocalFiles = []FileTransfer{
 		FileTransfer{
-			Filename:     "certreq.txt",
-			Url:          "\\\\WTLWF046\\c$\\certreq.txt",
+			Filename:     "test.txt",
+			Url:          "\\\\localhost\\c$\\test.txt",
 			SaveLocation: "./"}}
 
 	return c.Save()
