@@ -8,6 +8,7 @@ import (
 )
 
 type Config struct {
+	Instructions string
 	Downloads  []FileTransfer `xml:"Downloads>Download"`
 	Exports    []Export       `xml:"Exports>Export"`
 	LocalFiles []FileTransfer `xml:"LocalFiles>LocalFile"`
@@ -19,24 +20,25 @@ func (c *Config) Load(fileName string) error {
 		if _, ok := err.(*os.PathError); ok {
 			c.SaveHelpConfig()
 		} else {
-			return err
+			print(err)
 		}
 	}
 
 	err = xml.Unmarshal(results, &c)
 	if err != nil && err != io.EOF {
-		return err
+		print(err)
 	}
 	return nil
 }
 
 func (c *Config) Save() error {
 	body, _ := xml.MarshalIndent(c, "", "  ")
-	return ioutil.WriteFile(configFile, body, 0600)
+	return ioutil.WriteFile(*config, body, 0600)
 }
 
 func (c *Config) SaveHelpConfig() error {
 
+	c.Instructions = "This is where you put instructions.\n You can have multiple lines!"
 	c.Downloads = []FileTransfer{
 		FileTransfer{
 			Filename:     "go1.0.2.windows-amd64.msi",
