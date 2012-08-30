@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -16,6 +17,7 @@ var (
 	downloads = flag.Bool("d", false, "Download files only")
 	exports   = flag.Bool("e", false, "Setup exports / environment variables only")
 	network   = flag.Bool("n", false, "Grab files off networked drives")
+	proxy 	  = flag.String("proxy", "", "Use a proxy when accessing the web")
 	verbose   = flag.Bool("v", true, "Verbose mode")
 )
 
@@ -26,6 +28,14 @@ func main() {
 		fmt.Println("Usage: SetupDev [flags]")
 		flag.PrintDefaults()
 		return
+	}
+
+	if *proxy != "" {
+		fmt.Printf("Checking the proxy: %v\n", os.Getenv("HTTP_PROXY"))
+		err := os.Setenv("HTTP_PROXY", *proxy)
+		if err != nil {
+			fmt.Printf("Error setting proxy: %v\n", err)
+		}
 	}
 
 	c := new(Config)
